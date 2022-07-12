@@ -6,6 +6,7 @@ export type CalendarState = {
   month: string;
   day: number;
   //   };
+  showSideBar: boolean;
 };
 
 export const initialState: CalendarState = {
@@ -14,6 +15,7 @@ export const initialState: CalendarState = {
   month: "July",
   day: 12,
   //   },
+  showSideBar: true,
 };
 const monthNames = [
   "January",
@@ -38,8 +40,11 @@ const calendarSlice = createSlice({
       state.year = payload.year;
       state.month = monthNames[payload.month];
     },
+    toggleSideBar(state: CalendarState) {
+      state.showSideBar = !state.showSideBar;
+    },
   },
 });
 
-export const { fetchDate } = calendarSlice.actions;
+export const { fetchDate, toggleSideBar } = calendarSlice.actions;
 export default calendarSlice.reducer;

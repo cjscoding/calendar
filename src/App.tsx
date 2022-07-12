@@ -8,11 +8,11 @@ function App() {
   return (
     <Provider store={store}>
       {/* <PersistGate loading={null} persistor={persistor}> */}
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-          </Routes>
-        </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
       {/* </PersistGate> */}
     </Provider>
   );

@@ -1,6 +1,6 @@
 import { RootState } from "../store/rootReducer";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchDate } from "../store/modules/calendar";
+import { fetchDate, toggleSideBar } from "../store/modules/calendar";
 import { useEffect } from "react";
 
 const HeaderComponent = () => {
@@ -21,7 +21,7 @@ const HeaderComponent = () => {
   return (
     <header className="p-3 border-b-[1px] border-slate-300 flex justify-between items-center">
       <div className="hidden sm:hidden md:flex">
-        <button className="mr-5">
+        <button className="mr-5" onClick={() => dispatch(toggleSideBar())}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
