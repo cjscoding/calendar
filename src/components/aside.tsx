@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/rootReducer";
 import { fetchDate } from "../store/modules/calendar";
@@ -9,13 +9,15 @@ import "react-day-picker/dist/style.css";
 const AsideComponent = () => {
   const dispatch = useDispatch();
 
-  const { showSideBar } = useSelector(
+  const { showSideBar, date } = useSelector(
     (state: RootState) => state.calendarReducer
   );
   const [selected, setSelected] = useState<Date>();
+  const [currentDate, setCurrentDate] = useState<Date>(date);
 
   const fetchCurrentDate = (day: Date) => {
     const dayData = {
+      date: day,
       year: day.getFullYear(),
       month: day.getMonth(),
       day: day.getDate(),
@@ -23,10 +25,16 @@ const AsideComponent = () => {
     dispatch(fetchDate(dayData));
   };
 
+  useEffect(() => {
+    setCurrentDate(date);
+  }, [date]);
+
   return (
     <aside className={`${showSideBar ? "block" : "hidden"}`}>
       <DayPicker
         mode="single"
+        month={currentDate}
+        onMonthChange={setCurrentDate}
         selected={selected}
         onSelect={setSelected}
         onDayClick={fetchCurrentDate}

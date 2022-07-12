@@ -2,8 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export type CalendarState = {
   //   showDate: {
+  date: Date;
   year: number;
-  month: string;
+  month: number;
+  monthName: string;
   day: number;
   //   };
   showSideBar: boolean;
@@ -11,9 +13,11 @@ export type CalendarState = {
 
 export const initialState: CalendarState = {
   //   showDate: {
-  year: 2022,
-  month: "July",
-  day: 12,
+  date: new Date(),
+  year: 0,
+  month: 0,
+  day: 0,
+  monthName: "",
   //   },
   showSideBar: true,
 };
@@ -37,9 +41,11 @@ const calendarSlice = createSlice({
   initialState,
   reducers: {
     fetchDate(state: CalendarState, { payload }) {
+      state.date = payload.date;
       state.year = payload.year;
-      state.month = monthNames[payload.month];
+      state.month = payload.month + 1;
       state.day = payload.day;
+      state.monthName = monthNames[payload.month];
     },
     toggleSideBar(state: CalendarState) {
       state.showSideBar = !state.showSideBar;

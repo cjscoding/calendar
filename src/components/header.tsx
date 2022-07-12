@@ -4,19 +4,29 @@ import { fetchDate, toggleSideBar } from "../store/modules/calendar";
 import { useEffect } from "react";
 
 const HeaderComponent = () => {
-  const { year, month } = useSelector(
-    (state: RootState) => state.calendarReducer
-  );
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const { year, monthName } = useSelector(
+    (state: RootState) => state.calendarReducer
+  );
+
+  const getToday = () => {
     const today = new Date();
     const dayData = {
+      date: today,
       year: today.getFullYear(),
       month: today.getMonth(),
       day: today.getDate(),
     };
     dispatch(fetchDate(dayData));
+  };
+
+  const fetchToday = () => {
+    getToday();
+  };
+
+  useEffect(() => {
+    getToday();
   }, []);
 
   return (
@@ -57,7 +67,10 @@ const HeaderComponent = () => {
         </div>
       </div>
       <div className="flex items-center">
-        <button className="px-3 py-1.5 border-[1px] border-slate-300 rounded-md">
+        <button
+          className="px-3 py-1.5 border-[1px] border-slate-300 rounded-md"
+          onClick={fetchToday}
+        >
           Today
         </button>
         <button className="mx-3">
@@ -93,7 +106,7 @@ const HeaderComponent = () => {
           </svg>
         </button>
         <span className="ml-3 font-semibold text-xl">
-          {month} {year}
+          {monthName} {year}
         </span>
       </div>
       <div className="flex items-center">
