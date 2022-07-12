@@ -10,10 +10,11 @@ const HeaderComponent = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let today = new Date();
-    let dayData = {
+    const today = new Date();
+    const dayData = {
       year: today.getFullYear(),
       month: today.getMonth(),
+      day: today.getDate(),
     };
     dispatch(fetchDate(dayData));
   }, []);
@@ -96,13 +97,15 @@ const HeaderComponent = () => {
         </span>
       </div>
       <div className="flex items-center">
-        <select
-          name="options"
-          className="px-3 py-1.5 border-[1px] border-slate-300 rounded-md outline-none hover:cursor-pointer"
-        >
-          <option value="week">Week</option>
-          <option value="month">Month</option>
-        </select>
+        <div className="px-2 py-1.5 border-[1px] border-slate-300 rounded-md">
+          <select
+            name="options"
+            className="outline-none hover:cursor-pointer w-max h-max"
+          >
+            <option value="week">Week</option>
+            <option value="month">Month</option>
+          </select>
+        </div>
         <div className="h-12 w-12 rounded-full overflow-hidden flex items-center ml-3">
           <img src="https://file.newswire.co.kr/data/datafile2/thumb_640/2020/07/3554238800_20200702112005_3344612467.jpg" />
         </div>

@@ -39,6 +39,7 @@ const calendarSlice = createSlice({
     fetchDate(state: CalendarState, { payload }) {
       state.year = payload.year;
       state.month = monthNames[payload.month];
+      state.day = payload.day;
     },
     toggleSideBar(state: CalendarState) {
       state.showSideBar = !state.showSideBar;
