@@ -1,25 +1,45 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 export type CalendarState = {
-  value: number;
+  //   showDate: {
+  year: number;
+  month: string;
+  day: number;
+  //   };
 };
 
-const initialState: CalendarState = {
-  value: 0,
+export const initialState: CalendarState = {
+  //   showDate: {
+  year: 2022,
+  month: "July",
+  day: 12,
+  //   },
 };
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 const calendarSlice = createSlice({
   name: "calendar",
   initialState,
   reducers: {
-    increment(state: CalendarState) {
-      state.value += 1;
-    },
-    decrement(state: CalendarState) {
-      state.value -= 1;
+    fetchDate(state: CalendarState, { payload }) {
+      state.year = payload.year;
+      state.month = monthNames[payload.month];
     },
   },
 });
 
-export const { increment, decrement } = calendarSlice.actions;
+export const { fetchDate } = calendarSlice.actions;
 export default calendarSlice.reducer;
