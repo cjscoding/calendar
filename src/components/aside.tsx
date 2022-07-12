@@ -13,7 +13,7 @@ const AsideComponent = () => {
     (state: RootState) => state.calendarReducer
   );
   const [selected, setSelected] = useState<Date>();
-  const [currentDate, setCurrentDate] = useState<Date>(date);
+  const [currentDate, setCurrentDate] = useState<Date>(new Date(date));
 
   const fetchCurrentDate = (day: Date) => {
     const dayData = {
@@ -26,7 +26,7 @@ const AsideComponent = () => {
   };
 
   useEffect(() => {
-    setCurrentDate(date);
+    setCurrentDate(new Date(date));
   }, [date]);
 
   return (

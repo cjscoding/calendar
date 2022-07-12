@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export type CalendarState = {
   //   showDate: {
-  date: Date;
+  date: string;
   year: number;
   month: number;
   monthName: string;
@@ -13,7 +13,7 @@ export type CalendarState = {
 
 export const initialState: CalendarState = {
   //   showDate: {
-  date: new Date(),
+  date: "",
   year: 0,
   month: 0,
   day: 0,

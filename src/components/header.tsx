@@ -13,7 +13,7 @@ const HeaderComponent = () => {
   const getToday = () => {
     const today = new Date();
     const dayData = {
-      date: today,
+      date: today.toString(),
       year: today.getFullYear(),
       month: today.getMonth(),
       day: today.getDate(),
