@@ -17,7 +17,7 @@ const AsideComponent = () => {
 
   const fetchCurrentDate = (day: Date) => {
     const dayData = {
-      date: day,
+      date: day.toString(),
       year: day.getFullYear(),
       month: day.getMonth(),
       day: day.getDate(),
