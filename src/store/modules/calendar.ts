@@ -6,6 +6,7 @@ interface dateType {
   monthName: string;
   day: number;
   dayname: string;
+  date: string;
 }
 
 export type CalendarState = {

@@ -2,11 +2,12 @@ import { RootState } from "../store/rootReducer";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchDate, toggleSideBar, fetchWeek } from "../store/modules/calendar";
 import { useEffect } from "react";
+import { calcNextWeek, calcCurrentWeek, calcPrevWeek } from "../utils/calcWeek";
 
 const HeaderComponent = () => {
   const dispatch = useDispatch();
 
-  const { year, monthName, currentWeek } = useSelector(
+  const { currentWeek } = useSelector(
     (state: RootState) => state.calendarReducer
   );
 
@@ -16,90 +17,15 @@ const HeaderComponent = () => {
     month: number;
     day: number;
   }
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"];
 
   const getNextWeek = () => {
-    const nextWeek = [];
-    for (let i = 0; i < 7; i++) {
-      let curWeekDay = currentWeek[i];
-
-      let newDate = new Date(
-        Number(curWeekDay.year),
-        Number(curWeekDay.month) - 1,
-        Number(curWeekDay.day) + 7
-      )
-        .toLocaleDateString()
-        .split(".");
-      let dateObj = {
-        year: newDate[0],
-        month: newDate[1].trim(),
-        monthName: monthNames[Number(newDate[1].trim()) - 1],
-        day: newDate[2].trim(),
-        dayName: dayNames[i],
-      };
-      nextWeek.push(dateObj);
-    }
-    dispatch(fetchWeek(nextWeek));
+    let newWeek = calcNextWeek(currentWeek);
+    dispatch(fetchWeek(newWeek));
   };
 
   const getPrevWeek = () => {
-    const prevWeek = [];
-    for (let i = 0; i < 7; i++) {
-      let curWeekDay = currentWeek[i];
-
-      let newDate = new Date(
-        Number(curWeekDay.year),
-        Number(curWeekDay.month) - 1,
-        Number(curWeekDay.day) - 7
-      )
-        .toLocaleDateString()
-        .split(".");
-      let dateObj = {
-        year: newDate[0],
-        month: newDate[1].trim(),
-        monthName: monthNames[Number(newDate[1].trim()) - 1],
-        day: newDate[2].trim(),
-        dayName: dayNames[i],
-      };
-      prevWeek.push(dateObj);
-    }
-    dispatch(fetchWeek(prevWeek));
-  };
-
-  const getCurrentWeek = ({ date, year, month, day }: dateType) => {
-    const currentDay = date.split(" ")[0];
-    const currentDayIdx = dayNames.indexOf(currentDay);
-
-    // sun ~ sat
-    const currentWeek = [];
-    for (let i = 0; i < 7; i++) {
-      let newDate = new Date(year, month, day - currentDayIdx + i)
-        .toLocaleDateString()
-        .split(".");
-      let dateObj = {
-        year: newDate[0],
-        month: newDate[1].trim(),
-        monthName: monthNames[Number(newDate[1].trim()) - 1],
-        day: newDate[2].trim(),
-        dayName: dayNames[i],
-      };
-      currentWeek.push(dateObj);
-    }
-    dispatch(fetchWeek(currentWeek));
+    let newWeek = calcPrevWeek(currentWeek);
+    dispatch(fetchWeek(newWeek));
   };
 
   const getToday = () => {
@@ -112,11 +38,8 @@ const HeaderComponent = () => {
     };
     dispatch(fetchDate(dayData));
 
-    getCurrentWeek(dayData);
-  };
-
-  const fetchToday = () => {
-    getToday();
+    let newWeek = calcCurrentWeek(dayData);
+    dispatch(fetchWeek(newWeek));
   };
 
   useEffect(() => {
@@ -163,7 +86,7 @@ const HeaderComponent = () => {
       <div className="flex items-center">
         <button
           className="px-3 py-1.5 border-[1px] border-slate-300 rounded-md"
-          onClick={fetchToday}
+          onClick={getToday}
         >
           Today
         </button>
