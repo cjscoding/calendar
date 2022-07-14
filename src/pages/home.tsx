@@ -8,6 +8,7 @@ const HomePage = () => {
   const { showSideBar } = useSelector(
     (state: RootState) => state.calendarReducer
   );
+
   return (
     <div>
       <Header />

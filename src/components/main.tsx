@@ -1,6 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/rootReducer";
 
 const MainComponent = () => {
+  const { currentWeek } = useSelector(
+    (state: RootState) => state.calendarReducer
+  );
+
   const week = ["SUN", "MON", "TUE", "WED", "THR", "FRI", "SAT"];
   const hours = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   const [days, setDays] = useState([1, 2, 3, 4, 5, 6, 7]);
@@ -10,6 +16,8 @@ const MainComponent = () => {
     console.log(e.target.key);
     console.log(e.target.value);
   };
+
+  useEffect(() => {}, []);
 
   return (
     <main className="w-full p-3 flex flex-col">
@@ -21,9 +29,9 @@ const MainComponent = () => {
               {w}
             </span>
           ))}
-          {days.map((d) => (
-            <h2 key={d} className="text-2xl font-semibold">
-              <div className="pt-3">{d}</div>
+          {currentWeek.map((date) => (
+            <h2 key={date.day} className="text-2xl font-semibold">
+              <div className="pt-3">{date.day}</div>
             </h2>
           ))}
         </div>
@@ -51,18 +59,23 @@ const MainComponent = () => {
           {days.map((d) => (
             <div
               key={d}
-              className="grid grid-rows-[15px_repeat(24, minmax(0, 1fr))] border-l-[1px]"
+              className="grid grid-rows-[15px_repeat(24, minmax(0, 1fr))] border-l-[1px] relative"
             >
               <div></div>
               {hours.map((h) => (
-                <div
-                  key={h}
-                  className="border-t-[1px] text-white"
-                  onClick={onClickBox}
-                >.</div>
+                <div key={h} className="border-t-[1px] text-white">
+                  .
+                  {d == 1 && h == 12 ? (
+                    <div className="absolute top-10 left-0 w-5/6 h-3/4 rounded-sm text-black bg-indigo-500">
+                      sdsdsjfks
+                    </div>
+                  ) : null}
+                </div>
               ))}
               {hours.map((h) => (
-                <div key={h + 12} className="border-t-[1px] text-white">.</div>
+                <div key={h + 12} className="border-t-[1px] text-white">
+                  .
+                </div>
               ))}
             </div>
           ))}
@@ -73,21 +86,3 @@ const MainComponent = () => {
 };
 
 export default MainComponent;
-
-// {/* <div className="grid grid-flow-row grid-rows-">
-//           <div className=""></div>
-//           <div className="text-[10px] font-light">
-//             {hours.map((h) => (
-//               <div key={h} className="flex border-t-[1px]">
-//                 <span>{h} AM</span>
-//                 {/* <div className="border-t-[1px] w-5"></div> */}
-//               </div>
-//             ))}
-//             {hours.map((h) => (
-//               <div key={h} className="flex border-t-[1px]">
-//                 <span>{h} PM</span>
-//                 {/* <div className="border-t-[1px] w-5"></div> */}
-//               </div>
-//             ))}
-//           </div>
-//         </div> */}

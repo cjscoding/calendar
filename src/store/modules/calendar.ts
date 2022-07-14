@@ -1,26 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface dateType {
+  year: number;
+  month: number;
+  monthName: string;
+  day: number;
+  dayname: string;
+}
+
 export type CalendarState = {
-  //   showDate: {
   date: string;
   year: number;
   month: number;
   monthName: string;
   day: number;
-  //   };
   showSideBar: boolean;
+  currentWeek: dateType[];
 };
 
 export const initialState: CalendarState = {
-  //   showDate: {
   date: "",
   year: 0,
   month: 0,
   day: 0,
   monthName: "",
-  //   },
   showSideBar: true,
+  currentWeek: [],
 };
+
 const monthNames = [
   "January",
   "February",
@@ -50,8 +57,11 @@ const calendarSlice = createSlice({
     toggleSideBar(state: CalendarState) {
       state.showSideBar = !state.showSideBar;
     },
+    fetchWeek(state: CalendarState, { payload }) {
+      state.currentWeek = payload;
+    },
   },
 });
 
-export const { fetchDate, toggleSideBar } = calendarSlice.actions;
+export const { fetchDate, toggleSideBar, fetchWeek } = calendarSlice.actions;
 export default calendarSlice.reducer;
