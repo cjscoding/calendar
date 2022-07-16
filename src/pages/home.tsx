@@ -2,15 +2,16 @@ import Header from "../components/header";
 import Aside from "../components/aside";
 import Main from "../components/main";
 import { RootState } from "../store/rootReducer";
-import { useSelector } from "react-redux";
-import EventModal from "../components/eventModal";
+import { useSelector, useDispatch } from "react-redux";
+import EventModal from "../components/scheduleModal";
 import { useState } from "react";
+import { toggleModal } from "../store/modules/calendar";
 
 const HomePage = () => {
-  const { showSideBar } = useSelector(
+  const dispatch = useDispatch();
+  const { showSideBar, showModal } = useSelector(
     (state: RootState) => state.calendarReducer
   );
-  const [showModal, setShowModal] = useState<boolean>(false);
 
   return (
     <div>
@@ -19,7 +20,7 @@ const HomePage = () => {
         {showSideBar ? (
           <button
             className="absolute top-3 left-3 flex items-center p-4 md:px-5 md:py-2.5 border-[1px] border-slate-300 rounded-full md:rounded-3xl"
-            onClick={() => setShowModal(!showModal)}
+            onClick={() => dispatch(toggleModal(true))}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +43,7 @@ const HomePage = () => {
         ) : (
           <button
             className="absolute top-3 left-3 flex items-center p-4 border-[1px] border-slate-300 rounded-full"
-            onClick={() => setShowModal(!showModal)}
+            onClick={() => dispatch(toggleModal(true))}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +61,7 @@ const HomePage = () => {
             </svg>
           </button>
         )}
-        <EventModal showModal={showModal} setShowModal={setShowModal} />
+        <EventModal />
         <div className="hidden md:block pt-12">
           <Aside />
         </div>

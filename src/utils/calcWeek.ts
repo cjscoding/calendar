@@ -7,18 +7,18 @@ interface dateType {
   dayname?: string;
 }
 const monthNames = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
+  "January",
+  "Febrary",
+  "March",
+  "April",
   "May",
   "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 const days = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"];
 
@@ -29,13 +29,16 @@ export const calcCurrentWeek = ({ date, year, month, day }: dateType) => {
   // sun ~ sat
   const currentWeek = [];
   for (let i = day - currentDayIdx; i < day - currentDayIdx + 7; i++) {
-    let newDate = new Date(year, month, i).toLocaleDateString().split(".");
+    let newDate = new Date(year, month, i);
+    let newDateLocale = newDate.toLocaleDateString().split(".");
+    let newDateString = newDate.toString().split(" ")[0];
+
     let dateObj = {
-      year: newDate[0],
-      month: newDate[1].trim(),
-      monthName: monthNames[Number(newDate[1].trim()) - 1],
-      day: newDate[2].trim(),
-      dayName: days[i],
+      year: newDateLocale[0],
+      month: newDateLocale[1].trim(),
+      monthName: monthNames[Number(newDateLocale[1].trim()) - 1],
+      day: newDateLocale[2].trim(),
+      dayName: newDateString,
     };
     currentWeek.push(dateObj);
   }
@@ -51,15 +54,16 @@ export const calcPrevWeek = (currentWeek: dateType[]) => {
       Number(curWeekDay.year),
       Number(curWeekDay.month) - 1,
       Number(curWeekDay.day) - 7
-    )
-      .toLocaleDateString()
-      .split(".");
+    );
+    let newDateLocale = newDate.toLocaleDateString().split(".");
+    let newDateString = newDate.toString().split(" ")[0];
+
     let dateObj = {
-      year: newDate[0],
-      month: newDate[1].trim(),
-      monthName: monthNames[Number(newDate[1].trim()) - 1],
-      day: newDate[2].trim(),
-      dayName: days[i],
+      year: newDateLocale[0],
+      month: newDateLocale[1].trim(),
+      monthName: monthNames[Number(newDateLocale[1].trim()) - 1],
+      day: newDateLocale[2].trim(),
+      dayName: newDateString,
     };
     prevWeek.push(dateObj);
   }
@@ -76,15 +80,16 @@ export const calcNextWeek = (currentWeek: dateType[]) => {
       Number(curWeekDay.year),
       Number(curWeekDay.month) - 1,
       Number(curWeekDay.day) + 7
-    )
-      .toLocaleDateString()
-      .split(".");
+    );
+    let newDateLocale = newDate.toLocaleDateString().split(".");
+    let newDateString = newDate.toString().split(" ")[0];
+
     let dateObj = {
-      year: newDate[0],
-      month: newDate[1].trim(),
-      monthName: monthNames[Number(newDate[1].trim()) - 1],
-      day: newDate[2].trim(),
-      dayName: days[i],
+      year: newDateLocale[0],
+      month: newDateLocale[1].trim(),
+      monthName: monthNames[Number(newDateLocale[1].trim()) - 1],
+      day: newDateLocale[2].trim(),
+      dayName: newDateString,
     };
     nextWeek.push(dateObj);
   }

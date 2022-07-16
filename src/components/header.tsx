@@ -125,17 +125,17 @@ const HeaderComponent = () => {
         <span className="ml-3 font-semibold text-xl">
           {currentWeek[0].year !== currentWeek[6].year ? (
             <div>
-              {currentWeek[0].monthName} {currentWeek[0].year} -{" "}
-              {currentWeek[6].monthName} {currentWeek[6].year}
+              {currentWeek[0].monthName.slice(0, 3)} {currentWeek[0].year} -{" "}
+              {currentWeek[6].monthName.slice(0, 3)} {currentWeek[6].year}
             </div>
           ) : currentWeek[0].month !== currentWeek[6].month ? (
             <div>
-              {currentWeek[0].monthName} - {currentWeek[6].monthName}{" "}
-              {currentWeek[6].year}
+              {currentWeek[0].monthName.slice(0, 3)} -{" "}
+              {currentWeek[6].monthName.slice(0, 3)} {currentWeek[6].year}
             </div>
           ) : (
             <div>
-              {currentWeek[6].monthName} {currentWeek[6].year}
+              {currentWeek[6].monthName.slice(0, 3)} {currentWeek[6].year}
             </div>
           )}
         </span>
