@@ -51,6 +51,10 @@ const EventModalComponent = () => {
   };
 
   const addNewSchedule = (e: MouseEvent<HTMLButtonElement>) => {
+    if (!title) {
+      alert("Title is required");
+      return;
+    }
     const info = { title, time };
     dispatch(addSchedule({ date, info }));
     dispatch(toggleModal(false));

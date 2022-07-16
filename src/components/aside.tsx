@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/rootReducer";
 import { fetchDate, fetchWeek } from "../store/modules/calendar";
 import { calcCurrentWeek } from "../utils/calcWeek";
+import { calcWeekSchedules } from "../utils/calcWeekSchedules";
+import { setCurrentWeekSchedules } from "../store/modules/schedule";
 
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
@@ -13,6 +15,10 @@ const AsideComponent = () => {
   const { showSideBar, date } = useSelector(
     (state: RootState) => state.calendarReducer
   );
+  const { schedules } = useSelector(
+    (state: RootState) => state.scheduleReducer
+  );
+
   const [selected, setSelected] = useState<Date>();
   const [currentDate, setCurrentDate] = useState<Date>(new Date(date));
 
@@ -38,6 +44,10 @@ const AsideComponent = () => {
     };
     let newWeek = calcCurrentWeek(selectedDateObj);
     dispatch(fetchWeek(newWeek));
+
+    // get schedules for each day
+    let newWeekSchedules = calcWeekSchedules({ newWeek, schedules });
+    dispatch(setCurrentWeekSchedules(newWeekSchedules));
   }, [date]);
 
   return (

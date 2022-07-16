@@ -3,12 +3,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchDate, toggleSideBar, fetchWeek } from "../store/modules/calendar";
 import { useEffect } from "react";
 import { calcNextWeek, calcCurrentWeek, calcPrevWeek } from "../utils/calcWeek";
+import { calcWeekSchedules } from "../utils/calcWeekSchedules";
+import { setCurrentWeekSchedules } from "../store/modules/schedule";
 
 const HeaderComponent = () => {
   const dispatch = useDispatch();
 
   const { currentWeek } = useSelector(
     (state: RootState) => state.calendarReducer
+  );
+  const { schedules } = useSelector(
+    (state: RootState) => state.scheduleReducer
   );
 
   interface dateType {
@@ -21,11 +26,19 @@ const HeaderComponent = () => {
   const getNextWeek = () => {
     let newWeek = calcNextWeek(currentWeek);
     dispatch(fetchWeek(newWeek));
+
+    // get schedules for each day
+    let newWeekSchedules = calcWeekSchedules({ newWeek, schedules });
+    dispatch(setCurrentWeekSchedules(newWeekSchedules));
   };
 
   const getPrevWeek = () => {
     let newWeek = calcPrevWeek(currentWeek);
     dispatch(fetchWeek(newWeek));
+
+    // get schedules for each day
+    let newWeekSchedules = calcWeekSchedules({ newWeek, schedules });
+    dispatch(setCurrentWeekSchedules(newWeekSchedules));
   };
 
   const getToday = () => {
@@ -40,6 +53,10 @@ const HeaderComponent = () => {
 
     let newWeek = calcCurrentWeek(dayData);
     dispatch(fetchWeek(newWeek));
+
+    // get schedules for each day
+    let newWeekSchedules = calcWeekSchedules({ newWeek, schedules });
+    dispatch(setCurrentWeekSchedules(newWeekSchedules));
   };
 
   useEffect(() => {

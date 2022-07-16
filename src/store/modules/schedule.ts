@@ -24,6 +24,7 @@ export type ScheduleState = {
   schedules: {
     [key: string]: ScheduleType[];
   };
+  currentWeekSchedules: ScheduleType[][];
 };
 
 export const initialState: ScheduleState = {
@@ -36,6 +37,7 @@ export const initialState: ScheduleState = {
   },
   selectedHour: 0,
   schedules: {},
+  currentWeekSchedules: [],
 };
 
 const scheduleSlice = createSlice({
@@ -50,8 +52,11 @@ const scheduleSlice = createSlice({
       if (!state.schedules[payload.date]) state.schedules[payload.date] = [];
       state.schedules[payload.date].push(payload.info);
     },
+    setCurrentWeekSchedules(state: ScheduleState, { payload }) {
+      state.currentWeekSchedules = payload;
+    },
   },
 });
 
-export const { setSelectedDateInfo, addSchedule } = scheduleSlice.actions;
+export const { setSelectedDateInfo, addSchedule, setCurrentWeekSchedules } = scheduleSlice.actions;
 export default scheduleSlice.reducer;
