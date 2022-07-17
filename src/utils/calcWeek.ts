@@ -34,6 +34,15 @@ export const calcCurrentWeek = ({ date, year, month, day }: dateType) => {
     let newDateString = newDate.toString().split(" ")[0];
 
     let dateObj = {
+      date: `${newDateLocale[0]}-${
+        Number(newDateLocale[1].trim()) < 10
+          ? "0" + newDateLocale[1].trim()
+          : newDateLocale[1].trim()
+      }-${
+        Number(newDateLocale[2].trim()) < 10
+          ? "0" + newDateLocale[2].trim()
+          : newDateLocale[2].trim()
+      }`,
       year: newDateLocale[0],
       month: newDateLocale[1].trim(),
       monthName: monthNames[Number(newDateLocale[1].trim()) - 1],
@@ -59,6 +68,7 @@ export const calcPrevWeek = (currentWeek: dateType[]) => {
     let newDateString = newDate.toString().split(" ")[0];
 
     let dateObj = {
+      date: newDate.toLocaleDateString(),
       year: newDateLocale[0],
       month: newDateLocale[1].trim(),
       monthName: monthNames[Number(newDateLocale[1].trim()) - 1],
@@ -85,6 +95,7 @@ export const calcNextWeek = (currentWeek: dateType[]) => {
     let newDateString = newDate.toString().split(" ")[0];
 
     let dateObj = {
+      date: newDate.toLocaleDateString(),
       year: newDateLocale[0],
       month: newDateLocale[1].trim(),
       monthName: monthNames[Number(newDateLocale[1].trim()) - 1],

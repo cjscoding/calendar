@@ -75,14 +75,15 @@ const EventModalComponent = () => {
   }, [selectedDate]);
 
   useEffect(() => {
-    if (!selectedHour) return;
-    let newTime = {
-      startHour: selectedHour,
-      startMinute: 0,
-      endHour: selectedHour == 23 ? 23 : selectedHour + 1,
-      endMinute: 0,
-    };
-    setTime(newTime);
+    if (selectedHour >= 0) {
+      let newTime = {
+        startHour: selectedHour,
+        startMinute: 0,
+        endHour: selectedHour == 23 ? 23 : selectedHour + 1,
+        endMinute: selectedHour == 23 ? 15 : 0,
+      };
+      setTime(newTime);
+    }
   }, [selectedHour]);
 
   return (

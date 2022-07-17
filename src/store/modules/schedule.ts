@@ -47,6 +47,7 @@ const scheduleSlice = createSlice({
     setSelectedDateInfo(state: ScheduleState, { payload }) {
       state.selectedDate = payload.date;
       state.selectedHour = payload.hour;
+      console.log(payload.hour);
     },
     addSchedule(state: ScheduleState, { payload }) {
       if (!state.schedules[payload.date]) state.schedules[payload.date] = [];
@@ -55,8 +56,16 @@ const scheduleSlice = createSlice({
     setCurrentWeekSchedules(state: ScheduleState, { payload }) {
       state.currentWeekSchedules = payload;
     },
+    deleteSchedule(state: ScheduleState, { payload }) {
+      state.schedules[payload.date].splice(payload.idx, 1);
+    },
   },
 });
 
-export const { setSelectedDateInfo, addSchedule, setCurrentWeekSchedules } = scheduleSlice.actions;
+export const {
+  setSelectedDateInfo,
+  addSchedule,
+  setCurrentWeekSchedules,
+  deleteSchedule,
+} = scheduleSlice.actions;
 export default scheduleSlice.reducer;

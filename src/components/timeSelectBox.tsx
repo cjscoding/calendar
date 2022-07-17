@@ -1,4 +1,4 @@
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useEffect } from "react";
 
 interface TimeType {
   startHour: number;
@@ -23,12 +23,6 @@ const TimeSelectBox = ({
     21, 22, 23,
   ];
   const minutes = [0, 15, 30, 45];
-  const [currentTime, setCurrentTime] = useState<TimeType>({
-    startHour: 0,
-    startMinute: 0,
-    endHour: 0,
-    endMinute: 0,
-  });
 
   const onChangeTime = (e: FormEvent<HTMLSelectElement>) => {
     if (isStartTime) setStartTime(e.currentTarget.value);
@@ -36,8 +30,7 @@ const TimeSelectBox = ({
   };
 
   useEffect(() => {
-    if (!time) return;
-    setCurrentTime(time);
+    console.log(time);
   }, [time]);
 
   return (
@@ -47,16 +40,15 @@ const TimeSelectBox = ({
         className="outline-none"
         value={
           isStartTime
-            ? `${currentTime.startHour}:${currentTime.startMinute}`
-            : `${currentTime.endHour}:${currentTime.endMinute}`
+            ? `${time.startHour}:${time.startMinute}`
+            : `${time.endHour}:${time.endMinute}`
         }
       >
         {hours.map((h) =>
           minutes.map((m) =>
             !isStartTime &&
-            (currentTime.startHour > h ||
-              (currentTime.startHour == h &&
-                currentTime.startMinute >= m)) ? null : (
+            (time.startHour > h ||
+              (time.startHour == h && time.startMinute >= m)) ? null : (
               <option key={`${h}:${m}`} value={`${h}:${m}`}>
                 {h == 0 || h == 12 ? 12 : h < 12 ? h : h - 12}:
                 {m == 0 ? "00" : m}
