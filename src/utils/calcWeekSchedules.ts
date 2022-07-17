@@ -5,6 +5,8 @@ export const calcWeekSchedules = ({
   newWeek: any;
   schedules: any;
 }) => {
+  console.log(newWeek, schedules);
+
   let currentWeekSchedulesArray = new Array(7).fill([]);
   for (let i = 0; i < 7; i++) {
     let y = newWeek[i].year;

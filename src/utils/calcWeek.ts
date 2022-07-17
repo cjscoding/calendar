@@ -1,4 +1,4 @@
-interface dateType {
+interface DateType {
   date: string;
   year: number;
   month: number;
@@ -22,7 +22,7 @@ const monthNames = [
 ];
 const days = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"];
 
-export const calcCurrentWeek = ({ date, year, month, day }: dateType) => {
+export const calcCurrentWeek = ({ date, year, month, day }: DateType) => {
   const currentDay = date.split(" ")[0];
   const currentDayIdx = days.indexOf(currentDay);
 
@@ -54,7 +54,7 @@ export const calcCurrentWeek = ({ date, year, month, day }: dateType) => {
   return currentWeek;
 };
 
-export const calcPrevWeek = (currentWeek: dateType[]) => {
+export const calcPrevWeek = (currentWeek: DateType[]) => {
   const prevWeek = [];
   for (let i = 0; i < 7; i++) {
     let curWeekDay = currentWeek[i];
@@ -81,7 +81,7 @@ export const calcPrevWeek = (currentWeek: dateType[]) => {
   return prevWeek;
 };
 
-export const calcNextWeek = (currentWeek: dateType[]) => {
+export const calcNextWeek = (currentWeek: DateType[]) => {
   const nextWeek = [];
   for (let i = 0; i < 7; i++) {
     let curWeekDay = currentWeek[i];

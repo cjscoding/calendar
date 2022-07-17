@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteSchedule } from "../store/modules/schedule";
+
 interface TimeType {
   startHour: number;
   startMinute: number;
   endHour: number;
   endMinute: number;
 }
+
 const DaySchedule = ({
   title,
   time,
@@ -23,9 +25,8 @@ const DaySchedule = ({
   date: string;
 }) => {
   const dispatch = useDispatch();
+
   const [showDeleteForm, setShowDeleteForm] = useState<boolean>(false);
-  //   const [top, setTop] = useState<string>("");
-  //   const [height, setHeight] = useState<string>("");
 
   const onDeleteSchedule = () => {
     let scheduleData = {
@@ -34,18 +35,6 @@ const DaySchedule = ({
     };
     dispatch(deleteSchedule(scheduleData));
   };
-
-  useEffect(() => {
-    // const startPosition =
-    //   ((Number(time.startHour) * 4 + Number(time.startMinute) / 15) / 96) * 100;
-    // const timeGap =
-    //   (((Number(time.endHour) - 1 - Number(time.startHour)) * 4 +
-    //     (Number(time.endMinute) + 60 - Number(time.startMinute)) / 15) /
-    //     96) *
-    //   100;
-    // setTop(`${startPosition}%`);
-    // setHeight(`${timeGap}%`);
-  }, []);
 
   return (
     <div

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/rootReducer";
-import { fetchDate, fetchWeek } from "../store/modules/calendar";
+import { fetchDate, setCurrentWeek } from "../store/modules/calendar";
 import { calcCurrentWeek } from "../utils/calcWeek";
 import { calcWeekSchedules } from "../utils/calcWeekSchedules";
 import { setCurrentWeekSchedules } from "../store/modules/schedule";
@@ -43,7 +43,7 @@ const AsideComponent = () => {
       day: selectedDate.getDate(),
     };
     let newWeek = calcCurrentWeek(selectedDateObj);
-    dispatch(fetchWeek(newWeek));
+    dispatch(setCurrentWeek(newWeek));
 
     // get schedules for each day
     let newWeekSchedules = calcWeekSchedules({ newWeek, schedules });

@@ -57,7 +57,7 @@ const calendarSlice = createSlice({
       state.day = payload.day;
       state.monthName = monthNames[payload.month];
     },
-    fetchWeek(state: CalendarState, { payload }) {
+    setCurrentWeek(state: CalendarState, { payload }) {
       state.currentWeek = payload;
     },
     toggleSideBar(state: CalendarState) {
@@ -69,6 +69,6 @@ const calendarSlice = createSlice({
   },
 });
 
-export const { fetchDate, toggleSideBar, fetchWeek, toggleModal } =
+export const { fetchDate, toggleSideBar, setCurrentWeek, toggleModal } =
   calendarSlice.actions;
 export default calendarSlice.reducer;

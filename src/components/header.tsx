@@ -1,10 +1,23 @@
 import { RootState } from "../store/rootReducer";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchDate, toggleSideBar, fetchWeek } from "../store/modules/calendar";
+import {
+  fetchDate,
+  toggleSideBar,
+  setCurrentWeek,
+} from "../store/modules/calendar";
 import { useEffect } from "react";
 import { calcNextWeek, calcCurrentWeek, calcPrevWeek } from "../utils/calcWeek";
 import { calcWeekSchedules } from "../utils/calcWeekSchedules";
 import { setCurrentWeekSchedules } from "../store/modules/schedule";
+
+interface DateType {
+  year: number;
+  month: number;
+  monthName: string;
+  day: number;
+  dayname: string;
+  date: string;
+}
 
 const HeaderComponent = () => {
   const dispatch = useDispatch();
@@ -25,7 +38,7 @@ const HeaderComponent = () => {
 
   const getNextWeek = () => {
     let newWeek = calcNextWeek(currentWeek);
-    dispatch(fetchWeek(newWeek));
+    dispatch(setCurrentWeek(newWeek));
 
     // get schedules for each day
     let newWeekSchedules = calcWeekSchedules({ newWeek, schedules });
@@ -34,7 +47,7 @@ const HeaderComponent = () => {
 
   const getPrevWeek = () => {
     let newWeek = calcPrevWeek(currentWeek);
-    dispatch(fetchWeek(newWeek));
+    dispatch(setCurrentWeek(newWeek));
 
     // get schedules for each day
     let newWeekSchedules = calcWeekSchedules({ newWeek, schedules });
@@ -52,7 +65,7 @@ const HeaderComponent = () => {
     dispatch(fetchDate(dayData));
 
     let newWeek = calcCurrentWeek(dayData);
-    dispatch(fetchWeek(newWeek));
+    dispatch(setCurrentWeek(newWeek));
 
     // get schedules for each day
     let newWeekSchedules = calcWeekSchedules({ newWeek, schedules });
@@ -62,6 +75,13 @@ const HeaderComponent = () => {
   useEffect(() => {
     getToday();
   }, []);
+
+  useEffect(() => {
+    // get schedules for each day
+    const newWeek = currentWeek;
+    let newWeekSchedules = calcWeekSchedules({ newWeek, schedules });
+    dispatch(setCurrentWeekSchedules(newWeekSchedules));
+  }, [schedules]);
 
   return (
     <header className="p-3 border-b-[1px] border-slate-300 flex justify-between items-center">
