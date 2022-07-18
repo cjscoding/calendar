@@ -1,26 +1,9 @@
-import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleModal } from "../store/modules/calendar";
 import { RootState } from "../store/rootReducer";
-import { setSelectedDateInfo, deleteSchedule } from "../store/modules/schedule";
+import { setSelectedDateInfo } from "../store/modules/schedule";
+import { DateType } from "../interfaces";
 import DaySchedule from "./daySchedule";
-
-interface TimeType {
-  startHour: number;
-  startMinute: number;
-  endHour: number;
-  endMinute: number;
-}
-
-interface ScheduleType {
-  title: string;
-  time: {
-    startHour: number;
-    startMinute: number;
-    endHour: number;
-    endMinute: number;
-  };
-}
 
 const MainComponent = () => {
   const dispatch = useDispatch();
@@ -36,53 +19,11 @@ const MainComponent = () => {
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
     21, 22, 23,
   ];
-  const [update, setUpdate] = useState(false);
-  //   const [showDeleteForm, setShowDeleteForm] = useState<boolean>(false);
 
-  //   const onDeleteSchedule = ({ date, idx }: { date: any; idx: number }) => {
-  //     let scheduleData = {
-  //       date,
-  //       idx,
-  //     };
-  //     dispatch(deleteSchedule(scheduleData));
-  //   };
-
-  const onClickTable = ({ date, idx }: { date: any; idx: number }) => {
-    // console.log(date, idx);
+  const onClickTable = ({ date, idx }: { date: DateType; idx: number }) => {
     dispatch(setSelectedDateInfo({ date, hour: idx }));
     dispatch(toggleModal(true));
   };
-
-  const calcScheduleBoxPosition = ({
-    title,
-    time,
-  }: {
-    title: string;
-    time: TimeType;
-  }) => {
-    const calcStartPosition =
-      ((time.startHour * 4 + time.startMinute / 15) / 96) * 100;
-    const calcTimeGap =
-      (time.endHour - 1 - time.startHour) * 4 +
-      (time.endMinute + 60 - time.startMinute) / 15;
-    const calcHeight = (calcTimeGap / 96) * 100;
-    const top = `top-[${calcStartPosition}%]`;
-    const height = `h-[${calcHeight}%]`;
-    console.log(top, height);
-    return (
-      <div
-        key={time.startHour}
-        className={`absolute bg-indigo-300 p-1 rounded w-5/6`}
-        style={{ top: top, height: height }}
-      >
-        <span className="text-base font-semibold">{title}</span>
-      </div>
-    );
-  };
-
-  useEffect(() => {
-    setUpdate(!update);
-  }, [currentWeekSchedules]);
 
   return (
     <main className="w-full p-3 flex flex-col">
@@ -109,7 +50,7 @@ const MainComponent = () => {
             {hours.map((h) => (
               <div key={h} className="border-t-[1px]">
                 <span className="">
-                  {h == 0 ? 12 : h > 12 ? h - 12 : h} {h >= 12 ? "PM" : "AM"}
+                  {h === 0 ? 12 : h > 12 ? h - 12 : h} {h >= 12 ? "PM" : "AM"}
                 </span>
               </div>
             ))}
@@ -121,7 +62,7 @@ const MainComponent = () => {
               key={date.day}
               className="grid grid-rows-24 border-l-[1px] relative"
             >
-              {hours.map((h, idx) => (
+              {hours.map((_, idx) => (
                 <div
                   key={idx}
                   className="border-t-[1px] text-white"
@@ -154,7 +95,7 @@ const MainComponent = () => {
                     key={idx}
                     top={top}
                     height={height}
-                    date={date.date}
+                    date={date.date.toString()}
                     title={schedule.title}
                     time={schedule.time}
                     idx={idx}

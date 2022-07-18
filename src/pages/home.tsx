@@ -1,15 +1,14 @@
-import Header from "../components/header";
-import Aside from "../components/aside";
+import Header from "../components/layout/header";
+import Aside from "../components/layout/aside";
 import Main from "../components/main";
-import { RootState } from "../store/rootReducer";
-import { useSelector, useDispatch } from "react-redux";
 import EventModal from "../components/scheduleModal";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../store/rootReducer";
 import { toggleModal } from "../store/modules/calendar";
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const { showSideBar, showModal } = useSelector(
+  const { showSideBar } = useSelector(
     (state: RootState) => state.calendarReducer
   );
 

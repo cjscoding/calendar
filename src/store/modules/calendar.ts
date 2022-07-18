@@ -1,13 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-interface DateType {
-  year: number;
-  month: number;
-  monthName: string;
-  day: number;
-  dayname: string;
-  date: string;
-}
+import { DateType } from "../../interfaces";
 
 export type CalendarState = {
   date: string;

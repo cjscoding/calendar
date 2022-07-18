@@ -2,8 +2,9 @@ import { useEffect, useState, MouseEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleModal } from "../store/modules/calendar";
 import { RootState } from "../store/rootReducer";
-import TimeSelectBox from "./timeSelectBox";
 import { addSchedule } from "../store/modules/schedule";
+import { TimeType } from "../interfaces";
+import TimeSelectBox from "./timeSelectBox";
 
 const EventModalComponent = () => {
   const dispatch = useDispatch();
@@ -13,13 +14,6 @@ const EventModalComponent = () => {
   const { selectedDate, selectedHour } = useSelector(
     (state: RootState) => state.scheduleReducer
   );
-
-  interface TimeType {
-    startHour: number;
-    startMinute: number;
-    endHour: number;
-    endMinute: number;
-  }
 
   const [title, setTitle] = useState<string>("");
   const [date, setDate] = useState<string>("");
@@ -79,8 +73,8 @@ const EventModalComponent = () => {
       let newTime = {
         startHour: selectedHour,
         startMinute: 0,
-        endHour: selectedHour == 23 ? 23 : selectedHour + 1,
-        endMinute: selectedHour == 23 ? 15 : 0,
+        endHour: selectedHour === 23 ? 23 : selectedHour + 1,
+        endMinute: selectedHour === 23 ? 15 : 0,
       };
       setTime(newTime);
     }
@@ -129,11 +123,13 @@ const EventModalComponent = () => {
                 <div className="flex items-center">
                   <TimeSelectBox
                     setStartTime={setStartTime}
+                    setEndTime={setEndTime}
                     isStartTime={true}
                     time={time}
                   />
                   <span className="mx-3">-</span>
                   <TimeSelectBox
+                    setStartTime={setStartTime}
                     setEndTime={setEndTime}
                     isStartTime={false}
                     time={time}

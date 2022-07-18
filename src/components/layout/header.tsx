@@ -1,23 +1,15 @@
-import { RootState } from "../store/rootReducer";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchDate,
-  toggleSideBar,
-  setCurrentWeek,
-} from "../store/modules/calendar";
 import { useEffect } from "react";
-import { calcNextWeek, calcCurrentWeek, calcPrevWeek } from "../utils/calcWeek";
-import { calcWeekSchedules } from "../utils/calcWeekSchedules";
-import { setCurrentWeekSchedules } from "../store/modules/schedule";
-
-interface DateType {
-  year: number;
-  month: number;
-  monthName: string;
-  day: number;
-  dayname: string;
-  date: string;
-}
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../store/rootReducer";
+import {
+    fetchDate,
+    toggleSideBar,
+    setCurrentWeek,
+} from "../../store/modules/calendar";
+import { setCurrentWeekSchedules } from "../../store/modules/schedule";
+import { calcNextWeek, calcCurrentWeek, calcPrevWeek } from "../../utils/calcWeek";
+import { calcWeekSchedules } from "../../utils/calcWeekSchedules";
+import { DateType } from "../../interfaces";
 
 const HeaderComponent = () => {
   const dispatch = useDispatch();
@@ -28,13 +20,6 @@ const HeaderComponent = () => {
   const { schedules } = useSelector(
     (state: RootState) => state.scheduleReducer
   );
-
-  interface dateType {
-    date: string;
-    year: number;
-    month: number;
-    day: number;
-  }
 
   const getNextWeek = () => {
     let newWeek = calcNextWeek(currentWeek);
@@ -56,11 +41,13 @@ const HeaderComponent = () => {
 
   const getToday = () => {
     const today = new Date();
-    const dayData: dateType = {
+    const dayData: DateType = {
       date: today.toString(),
-      year: today.getFullYear(),
-      month: today.getMonth(),
-      day: today.getDate(),
+      year: Number(today.getFullYear()),
+      month: Number(today.getMonth()),
+      day: Number(today.getDate()),
+      dayName: "",
+      monthName: "",
     };
     dispatch(fetchDate(dayData));
 
@@ -79,6 +66,7 @@ const HeaderComponent = () => {
   useEffect(() => {
     // get schedules for each day
     const newWeek = currentWeek;
+
     let newWeekSchedules = calcWeekSchedules({ newWeek, schedules });
     dispatch(setCurrentWeekSchedules(newWeekSchedules));
   }, [schedules]);
@@ -162,17 +150,21 @@ const HeaderComponent = () => {
         <span className="ml-3 font-semibold text-xl">
           {currentWeek[0].year !== currentWeek[6].year ? (
             <div>
-              {currentWeek[0].monthName.slice(0, 3)} {currentWeek[0].year} -{" "}
-              {currentWeek[6].monthName.slice(0, 3)} {currentWeek[6].year}
+              {currentWeek[0].monthName.toString().slice(0, 3)}{" "}
+              {currentWeek[0].year} -{" "}
+              {currentWeek[6].monthName.toString().slice(0, 3)}{" "}
+              {currentWeek[6].year}
             </div>
           ) : currentWeek[0].month !== currentWeek[6].month ? (
             <div>
-              {currentWeek[0].monthName.slice(0, 3)} -{" "}
-              {currentWeek[6].monthName.slice(0, 3)} {currentWeek[6].year}
+              {currentWeek[0].monthName.toString().slice(0, 3)} -{" "}
+              {currentWeek[6].monthName.toString().slice(0, 3)}{" "}
+              {currentWeek[6].year}
             </div>
           ) : (
             <div>
-              {currentWeek[6].monthName.slice(0, 3)} {currentWeek[6].year}
+              {currentWeek[6].monthName.toString().slice(0, 3)}{" "}
+              {currentWeek[6].year}
             </div>
           )}
         </span>

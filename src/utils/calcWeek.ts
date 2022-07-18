@@ -1,11 +1,5 @@
-interface DateType {
-  date: string;
-  year: number;
-  month: number;
-  monthName?: string;
-  day: number;
-  dayname?: string;
-}
+import { DateType } from "../interfaces";
+
 const monthNames = [
   "January",
   "Febrary",
@@ -23,13 +17,17 @@ const monthNames = [
 const days = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"];
 
 export const calcCurrentWeek = ({ date, year, month, day }: DateType) => {
-  const currentDay = date.split(" ")[0];
+  const currentDay = date.toString().split(" ")[0];
   const currentDayIdx = days.indexOf(currentDay);
 
   // sun ~ sat
   const currentWeek = [];
-  for (let i = day - currentDayIdx; i < day - currentDayIdx + 7; i++) {
-    let newDate = new Date(year, month, i);
+  for (
+    let i = Number(day) - currentDayIdx;
+    i < Number(day) - currentDayIdx + 7;
+    i++
+  ) {
+    let newDate = new Date(Number(year), Number(month), i);
     let newDateLocale = newDate.toLocaleDateString().split(".");
     let newDateString = newDate.toString().split(" ")[0];
 

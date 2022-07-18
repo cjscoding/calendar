@@ -1,13 +1,7 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { deleteSchedule } from "../store/modules/schedule";
-
-interface TimeType {
-  startHour: number;
-  startMinute: number;
-  endHour: number;
-  endMinute: number;
-}
+import { TimeType } from "../interfaces";
 
 const DaySchedule = ({
   title,
@@ -19,8 +13,8 @@ const DaySchedule = ({
 }: {
   title: string;
   time: TimeType;
-  top?: string;
-  height?: string;
+  top: string;
+  height: string;
   idx: number;
   date: string;
 }) => {
@@ -53,22 +47,22 @@ const DaySchedule = ({
           <span>{title}</span>
           <div className="flex my-2">
             <span>
-              {time.startHour == 0 || time.startHour == 12
+              {time.startHour === 0 || time.startHour === 12
                 ? 12
                 : time.startHour < 12
                 ? time.startHour
                 : time.startHour - 12}
-              :{time.startMinute == 0 ? "00" : time.startMinute}
+              :{time.startMinute === 0 ? "00" : time.startMinute}
               {time.startHour < 12 ? "AM" : "PM"}
             </span>
             <span className="mx-1">-</span>
             <span>
-              {time.endHour == 0 || time.endHour == 12
+              {time.endHour === 0 || time.endHour === 12
                 ? 12
                 : time.endHour < 12
                 ? time.endHour
                 : time.endHour - 12}
-              :{time.endMinute == 0 ? "00" : time.endMinute}
+              :{time.endMinute === 0 ? "00" : time.endMinute}
               {time.endHour < 12 ? "AM" : "PM"}
             </span>
           </div>

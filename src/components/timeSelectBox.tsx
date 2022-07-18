@@ -1,11 +1,5 @@
 import { FormEvent, useEffect } from "react";
-
-interface TimeType {
-  startHour: number;
-  startMinute: number;
-  endHour: number;
-  endMinute: number;
-}
+import { TimeType } from "../interfaces";
 
 const TimeSelectBox = ({
   setStartTime,
@@ -13,8 +7,8 @@ const TimeSelectBox = ({
   isStartTime,
   time,
 }: {
-  setStartTime?: any;
-  setEndTime?: any;
+  setStartTime: (startTime: string) => void;
+  setEndTime: (endTime: string) => void;
   isStartTime: boolean;
   time: TimeType;
 }) => {
@@ -28,10 +22,6 @@ const TimeSelectBox = ({
     if (isStartTime) setStartTime(e.currentTarget.value);
     else setEndTime(e.currentTarget.value);
   };
-
-  useEffect(() => {
-    console.log(time);
-  }, [time]);
 
   return (
     <div className="overflow-y-scroll">
@@ -48,10 +38,10 @@ const TimeSelectBox = ({
           minutes.map((m) =>
             !isStartTime &&
             (time.startHour > h ||
-              (time.startHour == h && time.startMinute >= m)) ? null : (
+              (time.startHour === h && time.startMinute >= m)) ? null : (
               <option key={`${h}:${m}`} value={`${h}:${m}`}>
-                {h == 0 || h == 12 ? 12 : h < 12 ? h : h - 12}:
-                {m == 0 ? "00" : m}
+                {h === 0 || h === 12 ? 12 : h < 12 ? h : h - 12}:
+                {m === 0 ? "00" : m}
                 {h < 12 ? "am" : "pm"}
               </option>
             )
@@ -61,4 +51,5 @@ const TimeSelectBox = ({
     </div>
   );
 };
+
 export default TimeSelectBox;

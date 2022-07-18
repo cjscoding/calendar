@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store/rootReducer";
-import { fetchDate, setCurrentWeek } from "../store/modules/calendar";
-import { calcCurrentWeek } from "../utils/calcWeek";
-import { calcWeekSchedules } from "../utils/calcWeekSchedules";
-import { setCurrentWeekSchedules } from "../store/modules/schedule";
-
+import { RootState } from "../../store/rootReducer";
+import { fetchDate, setCurrentWeek } from "../../store/modules/calendar";
+import { setCurrentWeekSchedules } from "../../store/modules/schedule";
+import { DateType } from "../../interfaces";
+import { calcCurrentWeek } from "../../utils/calcWeek";
+import { calcWeekSchedules } from "../../utils/calcWeekSchedules";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 
@@ -36,11 +36,13 @@ const AsideComponent = () => {
     const selectedDate = new Date(date);
     setCurrentDate(selectedDate);
 
-    const selectedDateObj = {
+    const selectedDateObj: DateType = {
       date: selectedDate.toString(),
       year: selectedDate.getFullYear(),
       month: selectedDate.getMonth(),
       day: selectedDate.getDate(),
+      dayName: "",
+      monthName: "",
     };
     let newWeek = calcCurrentWeek(selectedDateObj);
     dispatch(setCurrentWeek(newWeek));
