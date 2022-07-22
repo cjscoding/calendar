@@ -10,7 +10,7 @@ function App() {
       {/* <PersistGate loading={null} persistor={persistor}> */}
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/calendar" element={<Home />} />
         </Routes>
       </BrowserRouter>
       {/* </PersistGate> */}
